@@ -85,14 +85,6 @@ Para rodar o projeto localmente, você precisará de dois terminais abertos:
    ```
    O servidor iniciará geralmente em `http://127.0.0.1:8000`.
 
-2. **Terminal 2 - Frontend (Vite):**
-   Compile os assets em tempo real:
-   ```bash
-   npm run dev
-   ```
-
----
-
 ## Acesso à Aplicação
 
 Após iniciar os servidores (passo anterior), acesse a ferramenta de geração de cenários através do navegador:
