@@ -49,6 +49,7 @@ DB_PASSWORD=
 
 #### Integração OpenAI
 Necessário para a geração dos cenários.
+> Gere sua chave em: [OpenAI API Keys](https://platform.openai.com/settings/organization/api-keys)
 ```env
 OPENAI_API_KEY=sk-...
 ```
@@ -60,6 +61,7 @@ CONFLUENCE_URL=https://seu-dominio.atlassian.net/wiki/rest/api/content
 CONFLUENCE_EMAIL=seu-email@dominio.com
 CONFLUENCE_API_TOKEN=seu-api-token
 ```
+> Gere seu token em: [Atlassian API Tokens](https://id.atlassian.com/manage-profile/security/api-tokens)
 > **Nota**: O `CONFLUENCE_URL` deve apontar para a base da API REST do seu espaço Confluence.
 
 ### 3. Migrações
@@ -69,6 +71,35 @@ Execute as migrações para criar as tabelas necessárias:
 ```bash
 php artisan migrate
 ```
+
+---
+
+## Como Iniciar
+
+Para rodar o projeto localmente, você precisará de dois terminais abertos:
+
+1. **Terminal 1 - Backend (Laravel):**
+   Inicie o servidor de desenvolvimento do Laravel:
+   ```bash
+   php artisan serve
+   ```
+   O servidor iniciará geralmente em `http://127.0.0.1:8000`.
+
+2. **Terminal 2 - Frontend (Vite):**
+   Compile os assets em tempo real:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## Acesso à Aplicação
+
+Após iniciar os servidores (passo anterior), acesse a ferramenta de geração de cenários através do navegador:
+
+- **URL Principal**: [http://127.0.0.1:8000/test-scenarios](http://127.0.0.1:8000/test-scenarios)
+
+Esta é a tela onde você poderá interagir com a IA para gerar os cenários de testes e publicá-los no Confluence.
 
 ---
 
