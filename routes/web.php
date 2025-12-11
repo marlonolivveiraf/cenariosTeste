@@ -21,3 +21,7 @@ Route::get('/test-scenarios', function () {
     return view('test-scenarios');
 });
 
+
+Route::get('/bug-reporter', function () {
+    return view('bug-reporter');
+});

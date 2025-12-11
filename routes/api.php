@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TestScenarioController;
+use App\Http\Controllers\BugReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,14 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-use App\Http\Controllers\TestScenarioController;
-
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 Route::post('/test-scenarios/generate', [TestScenarioController::class, 'generate']);
 Route::post('/test-scenarios/publish', [TestScenarioController::class, 'publish']);
-
-
+Route::post('/bug-reporter/generate', [BugReportController::class, 'generate']);

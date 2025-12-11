@@ -22,7 +22,7 @@ class TestScenarioController extends Controller
             $file = $request->file('arquivo');
             $fileName = $file->getClientOriginalName();
             $extension = $file->getClientOriginalExtension();
-            
+
             try {
                 $extractedText = $extractor->extractText($file->getPathname(), $extension);
                 // Concatenate if both exist, or just prefer file if text is empty?
@@ -31,7 +31,7 @@ class TestScenarioController extends Controller
                 // Let's use extracted text. If user sent both, maybe they want context? 
                 // Let's just use extracted text if file exists, effectively overriding 'documentacao' input or appending.
                 // Requirement "Se vier arquivo... Se vier texto sem arquivo". Matches priority: File > Text.
-                $text = $extractedText; 
+                $text = $extractedText;
             } catch (\Exception $e) {
                 return response()->json(['error' => 'Error reading file: ' . $e->getMessage()], 400);
             }
@@ -40,7 +40,24 @@ class TestScenarioController extends Controller
         }
 
         try {
-            $scenarios = $openai->generateTestScenarios($text, $request->input('modelo'));
+            // Extract context fields
+            $context = [
+                'sistema' => $request->input('context_sistema'),
+                'modulo' => $request->input('context_modulo'),
+                'tipo' => $request->input('context_tipo'),
+                'tecnologia' => $request->input('context_tecnologia'),
+                'usuarios' => $request->input('context_usuarios'),
+            ];
+
+            // Filter empty values
+            $context = array_filter($context, fn($value) => !empty($value));
+
+            $scenarios = $openai->generateTestScenarios(
+                $text,
+                $request->input('modelo'),
+                $context,
+                $request->input('custom_instruction')
+            );
 
             $record = TestScenario::create([
                 'file_name' => $fileName,
@@ -79,4 +96,6 @@ class TestScenarioController extends Controller
             return response()->json(['error' => 'Error publishing to Confluence: ' . $e->getMessage()], 500);
         }
     }
+
+
 }
